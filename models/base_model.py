@@ -25,8 +25,13 @@ class BaseModel:
 
     def __str__(self):
         """String representation of the instance"""
-        return "[{}] ({}) {}".format(self.__class__.__name__,
-                                     self.id, self.__dict__)
+        class_name = self.__class__.__name__
+        obj_id = self.id
+        created_at = self.created_at
+        updated_at = self.updated_at
+        attributes = ", ".join(f"'{key}': {repr(value)}" for key,
+                               value in sorted(self.__dict__.items()))
+        return f"[{class_name}] ({obj_id}) {{{attributes}}}"
 
     def save(self):
         """Updates the public instance attribute updated_at
