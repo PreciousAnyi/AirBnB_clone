@@ -1,7 +1,6 @@
 #!/usr/bin/python3
 """BaseModel module"""
 
-from models import storage
 import uuid
 from datetime import datetime
 
@@ -10,6 +9,7 @@ class BaseModel:
     """BaseModel class"""
     def __init__(self, *args, **kwargs):
         """Initialization method"""
+        from models.engine.file_storage import storage
         if kwargs:
             for key, value in kwargs.items():
                 if key == "created_at" or key == "updated_at":
@@ -30,7 +30,8 @@ class BaseModel:
 
     def save(self):
         """Updates the public instance attribute updated_at
-                with the current datetime"""
+        with the current datetime"""
+        from models.engine.file_storage import storage
         self.updated_at = datetime.now()
         storage.save()
 
