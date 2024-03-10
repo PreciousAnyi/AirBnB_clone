@@ -10,6 +10,8 @@ from models.city import City
 from models.place import Place
 from models.amenity import Amenity
 from models.review import Review
+import re
+from shlex import split
 
 
 class HBNBCommand(cmd.Cmd):
@@ -17,6 +19,24 @@ class HBNBCommand(cmd.Cmd):
     Command interpreter for HBNB project.
     """
     prompt = "(hbnb) "
+
+    def parse(arg):
+        """parse function"""
+        curly_braces = re.search(r"\{(.*?)\}", arg)
+        brackets = re.search(r"\[(.*?)\]", arg)
+        if curly_braces is None:
+            if brackets is None:
+                return [i.strip(",") for i in split(arg)]
+            else:
+                lexer = split(arg[:brackets.span()[0]])
+                retl = [i.strip(",") for i in lexer]
+                retl.append(brackets.group())
+                return retl
+        else:
+            lexer = split(arg[:curly_braces.span()[0]])
+            retl = [i.strip(",") for i in lexer]
+            retl.append(curly_braces.group())
+            return retl
 
     def do_create(self, arg):
         """
