@@ -14,7 +14,3 @@ class User(BaseModel):
     def __init__(self, *args, **kwargs):
         """Initialize User instance"""
         super().__init__(*args, **kwargs)
-
-    def all(cls):
-        """Return all instances of User"""
-        return [obj for obj in storage.all().values() if isinstance(obj, cls)] 
