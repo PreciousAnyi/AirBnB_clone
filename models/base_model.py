@@ -2,6 +2,7 @@
 """BaseModel module"""
 
 import uuid
+import json
 from datetime import datetime
 
 
@@ -26,7 +27,10 @@ class BaseModel:
     def __str__(self):
         """String representation of the instance"""
         class_name = self.__class__.__name__
-        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
+        instance_id = self.id
+        attributes = self.__dict__
+        return "[{}] ({}) {}".format(class_name,
+                                     instance_id, attributes)
 
     def save(self):
         """Updates the public instance attribute updated_at
@@ -42,4 +46,4 @@ class BaseModel:
         new_dict['created_at'] = self.created_at.isoformat()
         new_dict['updated_at'] = self.updated_at.isoformat()
         new_dict['__class__'] = self.__class__.__name__
-        return new_dict
+        return json.loads(json.dumps(new_dict, ensure_ascii=False))
