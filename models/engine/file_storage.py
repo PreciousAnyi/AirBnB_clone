@@ -42,11 +42,12 @@ class FileStorage:
         if exists(FileStorage.__file_path):
             with open(FileStorage.__file_path, 'r') as file:
                 try:
-                    deserialized_obj = json.loads(file)
+                    file_content = file.read()
+                    deserialized_obj = json.loads(file_content)
                     for key, obj_dict in deserialized_obj.items():
                         class_name, obj_id = key.split('.')
                         obj_cls = eval(class_name)
                         obj_instance = obj_cls(**obj_dict)
-                        FileStorage.__objects[key] = obj_instance
+                        self.__objects[key] = obj_instance
                 except Exception as error:
                     pass
