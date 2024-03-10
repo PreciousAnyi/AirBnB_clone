@@ -26,12 +26,7 @@ class BaseModel:
     def __str__(self):
         """String representation of the instance"""
         class_name = self.__class__.__name__
-        obj_id = self.id
-        created_at = self.created_at
-        updated_at = self.updated_at
-        attributes = ", ".join(f"'{key}': {repr(value)}" for key,
-                               value in sorted(self.__dict__.items()))
-        return f"[{class_name}] ({obj_id}) {{{attributes}}}"
+        return "[{}] ({}) {}".format(class_name, self.id, self.__dict__)
 
     def save(self):
         """Updates the public instance attribute updated_at
@@ -43,7 +38,7 @@ class BaseModel:
         """Returns a dictionary containing all keys/values
                 of __dict__ of the instance"""
         new_dict = self.__dict__.copy()
-        new_dict['__class__'] = self.__class__.__name__
         new_dict['created_at'] = self.created_at.isoformat()
         new_dict['updated_at'] = self.updated_at.isoformat()
+        new_dict['__class__'] = self.__class__.__name__
         return new_dict
