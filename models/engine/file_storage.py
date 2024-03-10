@@ -50,3 +50,6 @@ class FileStorage:
                         self.__objects[key] = obj_instance
             except FileNotFoundError:
                 pass
+
+
+storage = FileStorage()
