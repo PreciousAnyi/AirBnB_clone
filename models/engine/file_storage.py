@@ -4,6 +4,12 @@
 import json
 from os.path import exists
 from models.base_model import BaseModel
+from models.user import User
+from models.state import State
+from models.city import City
+from models.place import Place
+from models.amenity import Amenity
+from models.review import Review
 
 
 class FileStorage:
@@ -47,7 +53,7 @@ class FileStorage:
                         class_name, obj_id = key.split('.')
                         obj_cls = globals()[class_name]
                         obj_instance = obj_cls(**value)
-                        self.__objects[key] = obj_instance
+                        FileStorage.__objects[key] = obj_instance
             except FileNotFoundError:
                 pass
 
